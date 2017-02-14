@@ -12,17 +12,15 @@ if __name__=="__main__":
     target_video = os.path.join(os.getcwd(), 'target.avi')
     print target_video
     img = imread(target_dir_frame_list[0])
-    shape = (img.shape[0],img.shape[1])
-    fps = 20
-    fourcc = cv2.cv.CV_FOURCC('m', 'p', '4', 'v') # note the lower case
-    fourcc = cv2.cv.CV_FOURCC('M','P','E','G')
-    vout = cv2.VideoWriter()
-    success = vout.open(target_video,fourcc,fps,shape,True) 
+    height , width , layers =  img.shape
+
+    video = cv2.VideoWriter('video.avi',-1,1,(width,height))
+
     for image in target_dir_frame_list:
         if not os.path.exists(image):
             raise FileNotFoundError(image)
         img = imread(image)
-        vout.write(img)
-    vout.release()
+        video.write(img)
     cv2.destroyAllWindows()
+    video.release()
 
